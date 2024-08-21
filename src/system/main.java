@@ -36,21 +36,36 @@ public class main {
                case 4:
                    mostrarTodos();
                    break;
+
+               case 5:
+                   System.out.println("Saliendo del sistema...");
+                   break;
+
                default:
                    System.out.println("Opción no valida");
 
            }
        } while (opcion != 5);
-       scanner.close();
+        scanner.close();
+        System.out.println("Finalizado!");
+
+    }
+
+    private static void mostrarEnTabla(Alumno alumno) {
+        System.out.println("Alumno encontrado:");
+
+        System.out.println("+----------------+---------------------------+");
+        System.out.println("|     Carnet     |       Nombre Completo      |");
+        System.out.println("+----------------+---------------------------+");
+        System.out.printf("| %-14s | %-25s |\n", alumno.getCarnet(), alumno.getNombreCompleto());
+        System.out.println("+----------------+---------------------------+");
     }
 
     private static void mostrarTodos() {
-        limpiarConsola();
         crudAlumno.mostarTodos();
     }
 
     private static void eliminar(Scanner scanner) {
-        limpiarConsola();
         System.out.println("Ingrese el carnet que desea eliminar");
         String carnet = scanner.nextLine();
         try{
@@ -61,20 +76,19 @@ public class main {
     }
 
     private static void buscar(Scanner scanner) {
-        limpiarConsola();
         System.out.println("Ingrese el carnet del alumno a bsucar");
         String carnet = scanner.nextLine();
 
         try {
             Alumno alumno = crudAlumno.buscar(carnet);
-            System.out.println("Alumno encontrado" + alumno);
+            mostrarEnTabla(alumno);
+            //System.out.println("Alumno encontrado" + alumno);
         } catch (AlumnoNoEncontradoException e){
             System.out.println(e.getMessage());
         }
     }
 
     private static void ingresar(Scanner scanner) {
-        limpiarConsola();
         System.out.println("Ingrese el carnet: ");
         String carnet = scanner.nextLine();
         System.out.println("Ingrese el nombre completo: ");
@@ -83,18 +97,4 @@ public class main {
 
         crudAlumno.ingresar(carnet, nombreCompleto);
     }
-
-    public static void limpiarConsola() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

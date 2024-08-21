@@ -28,8 +28,6 @@ public class AlumnosImpl implements crudAlumno{
         return alumno;
     }
 
-
-
     @Override
     public void eliminar(String carnet) throws AlumnoNoEncontradoException {
         if (alumnos.remove(carnet) == null){
